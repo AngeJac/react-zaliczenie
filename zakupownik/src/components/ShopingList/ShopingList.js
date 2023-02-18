@@ -1,40 +1,37 @@
 import React from 'react'
 import commonColumnsStyles from '../../common/styles/Columns.module.scss'
-function ShopingList(props) {
-	const { shoppingProducts } = props
-	const clickToRemove = indexRemoved => {
-		props.addToCart(prevState => prevState.filter((product, index) => index !== indexRemoved))
-	}
-
+function ShopingList({ shoppingProducts, handleLeftClick, handleRightClick }) {
 	return (
 		<div className={commonColumnsStyles.App}>
 			<header className={commonColumnsStyles.AppHeader}>
-				<div>
-					<ul>
-						{shoppingProducts.length !== 0 && (
-							<div className='list-header-info'>
-								<h3>Shopping list:</h3>
-							</div>
-						)}
-						{props.shoppingProducts.map((product, id) => {
-							return (
-								<li
-									className='list-header-product'
-									onContextMenu={e => {
-										e.preventDefault()
-										clickToRemove(id)
-									}}
-									key={id}
-								>
-									{product.nazwa}
-								</li>
-							)
-						})}
-					</ul>
-					{shoppingProducts.length === 0 && (
-						<div className='list-header-info'>Congratulations!! You buy everything from your shoping list!</div>
-					)}
-				</div>
+				<p>
+					<h3>Shoping list:</h3>
+				</p>
+				<ul>
+					{shoppingProducts.map((product, id) => (
+						<li
+							key={id}
+							onClick={() => {
+								handleLeftClick(id)
+							}}
+							onContextMenu={e => {
+								handleRightClick(id)
+								e.preventDefault()
+							}}
+						>
+							<label
+								style={{
+									textDecoration: `${product.completion ? 'line-through' : 'auto'}`,
+								}}
+							>
+								{product.nazwa}
+							</label>
+						</li>
+					))}
+				</ul>
+				{shoppingProducts.length === 0 && (
+					<div className='list-header-info'>Congratulations!! You bought everythnig from your shopping list!</div>
+				)}
 			</header>
 		</div>
 	)

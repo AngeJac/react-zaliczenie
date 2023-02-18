@@ -3,20 +3,17 @@ import commonColumnsStyles from '../../common/styles/Columns.module.scss'
 
 class ProductsList extends React.Component {
 	render() {
-		const { products, addToCart } = this.props
-
+		const { products, handleClick } = this.props
 		return (
 			<div className={commonColumnsStyles.App}>
 				<header className={commonColumnsStyles.AppHeader}>
-					<h3>Available products:</h3>
+					<h3>Products list:</h3>
 					<ul>
-						{products.map(product => {
-							return (
-								<li onClick={() => addToCart(prevState => [...prevState, product])} key={product.id}>
-									{product.nazwa}
-								</li>
-							)
-						})}
+						{products.map((product, id) => (
+							<li key={product.id} onClick={() => handleClick(id)}>
+								<label>{product.nazwa}</label>
+							</li>
+						))}
 					</ul>
 				</header>
 			</div>
